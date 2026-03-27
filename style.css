@@ -1,0 +1,233 @@
+/* RESET */
+body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    font-family: Arial, sans-serif;
+    background-color: black;
+}
+
+/* ========================= */
+/* TELA INICIAL */
+/* ========================= */
+#start-screen {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.start-box {
+    text-align: center;
+    color: white;
+    max-width: 400px;
+}
+
+#start-button {
+    padding: 12px 24px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    background: green;
+    color: white;
+    border-radius: 6px;
+}
+
+#start-button:hover {
+    background: #00cc00;
+}
+
+/* ========================= */
+/* PREVIEW */
+/* ========================= */
+#preview-screen {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.95);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    color: white;
+    flex-direction: column;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.preview-box {
+    max-width: 900px;
+    width: 100%;
+    text-align: center;
+}
+
+#advance-button {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    padding: 12px 30px;
+    background-color: green;
+    color: white;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#advance-button:hover {
+    background-color: #00cc00;
+}
+
+/* ========================= */
+/* JOGO */
+/* ========================= */
+#game-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: none;
+}
+
+#game-image {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 100%;
+    width: auto;
+    transform: translate(-50%, -50%);
+}
+
+/* BOTÃO VOLTAR */
+#back-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 10px;
+    cursor: pointer;
+    z-index: 10;
+}
+
+#back-button:hover {
+    background-color: darkred;
+}
+
+/* HOTSPOTS */
+.hotspot {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background-color: transparent;
+    border-radius: 50%;
+    cursor: pointer;
+    transform: translate(-50%, -50%);
+}
+
+.hotspot.found {
+    background-image: url('assets/check.png');
+    background-size: 18px 18px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/* CONTADOR */
+#counter {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    color: white;
+    font-size: 18px;
+    background-color: rgba(0,0,0,0.6);
+    padding: 6px 12px;
+    border-radius: 8px;
+    z-index: 20;
+}
+
+/* ========================= */
+/* LISTA DE OBJETOS */
+/* ========================= */
+#object-list-section {
+    padding: 40px 20px;
+    color: white;
+}
+
+#object-list-section h2 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.object-list {
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.object-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 15px;
+    background-color: #111;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+.object-item img {
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+}
+
+.object-item.found {
+    opacity: 0.5;
+}
+
+/* ========================= */
+/* MODAL FINAL */
+/* ========================= */
+#congrats-modal {
+    display: none;
+    position: fixed;
+    top: 0; 
+    left: 0;
+    width: 100%; 
+    height: 100%;
+    background: black;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    color: white;
+    text-align: center;
+}
+
+#congrats-modal .modal-content {
+    max-width: 500px;
+}
+
+#congrats-modal h2 {
+    margin-bottom: 20px;
+}
+
+.pre-save-btn {
+    display: inline-block;
+    padding: 12px 20px;
+    background-color: green;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.pre-save-btn:hover {
+    background-color: #00cc00;
+}

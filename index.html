@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caça aos Objetos</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- TELA INICIAL -->
+<div id="start-screen">
+    <div class="start-box">
+        <h1>Encontre os 7 Objetos</h1>
+        <p>
+            Explore a imagem e encontre todos os objetos escondidos.<br>
+            Clique nos lugares corretos para marcar.
+        </p>
+        <button id="start-button">Começar</button>
+    </div>
+</div>
+
+<!-- PREVIEW -->
+<div id="preview-screen">
+    <div class="preview-box">
+        <h2>Conheça os objetos:</h2>
+
+        <div class="object-list">
+
+            <div class="object-item" data-id="1">
+                <img src="assets/objeto1.png">
+                <div class="object-info">
+                    <h3>Shampoo</h3>
+                    <p>Objeto de extrema importância na rotina das mulheres.</p>
+                </div>
+            </div>
+
+            <div class="object-item" data-id="2">
+                <img src="assets/objeto2.png">
+                <div class="object-info">
+                    <h3>Espelho</h3>
+                    <p>Objeto utilizado para enxergar o próprio reflexo, ou seu único inimigo.</p>
+                </div>
+            </div>
+
+            <div class="object-item" data-id="3">
+                <img src="assets/objeto3.png">
+                <div class="object-info">
+                    <h3>Microfone</h3>
+                    <p>Transforma rimas em poder.</p>
+                </div>
+            </div>
+
+            <div class="object-item" data-id="4">
+                <img src="assets/objeto4.png">
+                <div class="object-info">
+                    <h3>Luva</h3>
+                    <p>Descompressão.</p>
+                </div>
+            </div>
+
+            <div class="object-item" data-id="5">
+                <img src="assets/objeto5.png">
+                <div class="object-info">
+                    <h3>Fone</h3>
+                    <p>Se isolar do mundo.</p>
+                </div>
+            </div>
+
+            <div class="object-item" data-id="6">
+                <img src="assets/objeto6.png">
+                <div class="object-info">
+                    <h3>Mãe orando</h3>
+                    <p>Proteção divina.</p>
+                </div>
+            </div>
+
+            <div class="object-item" data-id="7">
+                <img src="assets/objeto7.png">
+                <div class="object-info">
+                    <h3>Passaporte</h3>
+                    <p>Trapppp.</p>
+                </div>
+            </div>
+
+        </div>
+
+        <button id="advance-button">Avançar</button>
+    </div>
+</div>
+
+<!-- JOGO -->
+<div id="game-container">
+    <button id="back-button">Voltar</button>
+
+    <img id="game-image" src="assets/fundo1.jpg">
+
+    <div class="hotspot" data-id="1" style="left: 77.8%; top: 81.5%;"></div>
+    <div class="hotspot" data-id="2" style="left: 77%; top: 11.1%;"></div>
+    <div class="hotspot" data-id="3" style="left: 74.8%; top: 0.5%;"></div>
+    <div class="hotspot" data-id="4" style="left: 40.3%; top: 13.1%;"></div>
+    <div class="hotspot" data-id="5" style="left: 20.7%; top: 23.8%;"></div>
+    <div class="hotspot" data-id="6" style="left: 33.4%; top: 17.5%;"></div>
+    <div class="hotspot" data-id="7" style="left: 33.5%; top: 32.2%;"></div>
+
+    <div id="counter">0 / 7</div>
+</div>
+
+<!-- FINAL -->
+<div id="congrats-modal">
+    <div class="modal-content">
+        <h2>Parabéns! Você encontrou todos os objetos!</h2>
+        <a href="https://linkdopresave.com" target="_blank" class="pre-save-btn">
+            Presave da música
+        </a>
+    </div>
+</div>
+
+<script src="script.js"></script>
+<script src="timer.js"></script>
+
+</body>
+</html>
