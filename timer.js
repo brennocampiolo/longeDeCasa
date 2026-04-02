@@ -152,11 +152,11 @@ startGameBtn.addEventListener('click', () => {
 // ===============================
 function finalizarJogo() {
     clearInterval(interval);
-    // Salva tempo final e limpa dados de sessão
     const tempoFinal = getTempoTotal();
     localStorage.setItem('longeDeCasa_tempoAcumulado', String(tempoFinal));
+    // Salva tempo final para caso o jogador saia sem salvar o nome
+    localStorage.setItem('longeDeCasa_tempoFinal', String(tempoFinal));
     marcarComoJogou();
-    // Limpa dados de jogo em andamento
     localStorage.removeItem('longeDeCasa_jogoIniciado');
     localStorage.removeItem('longeDeCasa_encontrados');
     mostrarScore(tempoFinal);
@@ -283,8 +283,9 @@ async function salvar(nome, tempoFinal) {
         }
     }
 
-    // Limpa tempo acumulado após salvar
+    // Limpa dados temporários após salvar
     localStorage.removeItem('longeDeCasa_tempoAcumulado');
+    localStorage.removeItem('longeDeCasa_tempoFinal');
 
     mostrarRanking(nome);
 }

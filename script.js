@@ -34,15 +34,30 @@ function marcarComoJogou() {
 // ===============================
 // NAVEGACAO DE TELAS
 // ===============================
-// Se já jogou, vai direto para pós-jogo sem precisar clicar
-// Usa setTimeout(0) para garantir que timer.js carregou (mostrarRanking)
+// Se já jogou, verifica se precisa salvar nome ou vai direto pro pós-jogo
 if (jaJogou()) {
-    setTimeout(() => mostrarBloqueio(), 0);
+    setTimeout(() => {
+        const tempoFinal = localStorage.getItem('longeDeCasa_tempoFinal');
+        if (tempoFinal) {
+            // Jogou mas não salvou nome — mostra score screen
+            startScreen.style.display = 'none';
+            mostrarScore(parseInt(tempoFinal));
+        } else {
+            // Nome já salvo — vai pro pós-jogo
+            mostrarBloqueio();
+        }
+    }, 0);
 }
 
 startButton.addEventListener('click', () => {
     if (jaJogou()) {
-        mostrarBloqueio();
+        const tempoFinal = localStorage.getItem('longeDeCasa_tempoFinal');
+        if (tempoFinal) {
+            startScreen.style.display = 'none';
+            mostrarScore(parseInt(tempoFinal));
+        } else {
+            mostrarBloqueio();
+        }
         return;
     }
     startScreen.style.display = 'none';

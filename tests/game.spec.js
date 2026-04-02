@@ -147,6 +147,28 @@ test.describe('Longe de Casa - Jogo', () => {
         await page.screenshot({ path: `${SCREENSHOTS}/10-pos-jogo-direto.png`, fullPage: true });
     });
 
+    test('07c - Retorno sem nome salvo mostra score screen', async ({ page }) => {
+        // Simula: jogou, finalizou, mas saiu sem salvar nome
+        await page.evaluate(() => {
+            localStorage.setItem('longeDeCasa_jogou', 'true');
+            localStorage.setItem('longeDeCasa_tempoFinal', '95');
+        });
+        await page.reload({ waitUntil: 'domcontentloaded' });
+
+        // Deve mostrar score screen com campo de nome
+        const scoreScreen = page.locator('#score-screen');
+        await expect(scoreScreen).toBeVisible({ timeout: 10000 });
+        await expect(page.locator('#nome')).toBeVisible({ timeout: 5000 });
+
+        // Salva nome
+        await page.locator('#nome').fill('RetornoTest');
+        await page.locator('#save').click();
+
+        // Botão continuar aparece
+        await expect(page.locator('#continue')).toBeVisible({ timeout: 5000 });
+        await page.screenshot({ path: `${SCREENSHOTS}/10c-retorno-sem-nome.png`, fullPage: true });
+    });
+
     test('07b - Score screen com ranking grande é scrollável', async ({ page }) => {
         // Injeta ranking fake grande no localStorage
         const fakeRanking = Array.from({ length: 50 }, (_, i) => ({
