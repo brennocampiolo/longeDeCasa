@@ -20,5 +20,8 @@
   "homepage": "https://github.com/brennocampiolo/longeDeCasa#readme",
   "dependencies": {
     "firebase": "^12.11.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.58.2"
   }
 }

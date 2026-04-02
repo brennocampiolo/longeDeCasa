@@ -2,7 +2,7 @@
 body {
     margin: 0;
     padding: 0;
-    overflow-x: hidden;
+    overflow: hidden;
     font-family: Arial, sans-serif;
     background-color: black;
 }
@@ -25,6 +25,7 @@ body {
     text-align: center;
     color: white;
     max-width: 400px;
+    padding: 20px;
 }
 
 #start-button {
@@ -58,6 +59,7 @@ body {
     flex-direction: column;
     padding: 20px;
     box-sizing: border-box;
+    overflow-y: auto;
 }
 
 .preview-box {
@@ -67,9 +69,7 @@ body {
 }
 
 #advance-button {
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
+    margin-top: 20px;
     padding: 12px 30px;
     background-color: green;
     color: white;
@@ -91,20 +91,29 @@ body {
     width: 100vw;
     height: 100vh;
     display: none;
+    overflow: hidden;
+    background: black;
+    touch-action: none;
+}
+
+#game-wrapper {
+    position: absolute;
+    left: 0;
+    top: 0;
+    touch-action: none;
 }
 
 #game-image {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    height: 100%;
+    display: block;
+    height: 100vh;
     width: auto;
-    transform: translate(-50%, -50%);
+    user-select: none;
+    -webkit-user-drag: none;
 }
 
-/* BOTÃO VOLTAR */
+/* BOTAO VOLTAR */
 #back-button {
-    position: absolute;
+    position: fixed;
     top: 20px;
     left: 20px;
     background-color: red;
@@ -113,7 +122,8 @@ body {
     padding: 10px 18px;
     border-radius: 10px;
     cursor: pointer;
-    z-index: 10;
+    z-index: 100;
+    font-size: 14px;
 }
 
 #back-button:hover {
@@ -129,6 +139,12 @@ body {
     border-radius: 50%;
     cursor: pointer;
     transform: translate(-50%, -50%);
+    z-index: 10;
+    transition: background-color 0.2s;
+}
+
+.hotspot:hover {
+    background-color: rgba(255, 255, 255, 0.15);
 }
 
 .hotspot.found {
@@ -136,6 +152,8 @@ body {
     background-size: 18px 18px;
     background-repeat: no-repeat;
     background-position: center;
+    background-color: rgba(0, 200, 0, 0.3);
+    pointer-events: none;
 }
 
 /* CONTADOR */
@@ -148,22 +166,31 @@ body {
     background-color: rgba(0,0,0,0.6);
     padding: 6px 12px;
     border-radius: 8px;
-    z-index: 20;
+    z-index: 100;
+}
+
+/* BOTAO MUSICA */
+#music-toggle {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background: rgba(0,0,0,0.6);
+    color: white;
+    border: 1px solid rgba(255,255,255,0.3);
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    z-index: 100;
+}
+
+#music-toggle:hover {
+    background: rgba(255,255,255,0.15);
 }
 
 /* ========================= */
 /* LISTA DE OBJETOS */
 /* ========================= */
-#object-list-section {
-    padding: 40px 20px;
-    color: white;
-}
-
-#object-list-section h2 {
-    text-align: center;
-    margin-bottom: 30px;
-}
-
 .object-list {
     max-width: 900px;
     margin: 0 auto;
@@ -186,6 +213,7 @@ body {
     width: 60px;
     height: 60px;
     border-radius: 8px;
+    object-fit: cover;
 }
 
 .object-item.found {
@@ -198,9 +226,9 @@ body {
 #congrats-modal {
     display: none;
     position: fixed;
-    top: 0; 
+    top: 0;
     left: 0;
-    width: 100%; 
+    width: 100%;
     height: 100%;
     background: black;
     justify-content: center;
@@ -212,6 +240,7 @@ body {
 
 #congrats-modal .modal-content {
     max-width: 500px;
+    padding: 20px;
 }
 
 #congrats-modal h2 {
@@ -230,4 +259,89 @@ body {
 
 .pre-save-btn:hover {
     background-color: #00cc00;
+}
+
+/* ========================= */
+/* RESPONSIVIDADE */
+/* ========================= */
+@media (max-width: 768px) {
+    .object-list {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .object-item {
+        padding: 10px;
+        gap: 12px;
+    }
+
+    .object-item img {
+        width: 50px;
+        height: 50px;
+    }
+
+    .object-item .object-info h3 {
+        font-size: 14px;
+    }
+
+    .object-item .object-info p {
+        font-size: 12px;
+    }
+
+    .preview-box h2 {
+        font-size: 18px;
+    }
+
+    #advance-button {
+        position: relative;
+        bottom: auto;
+        right: auto;
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    .hotspot {
+        width: 50px;
+        height: 50px;
+    }
+
+    #counter {
+        font-size: 14px;
+        top: 10px;
+        right: 10px;
+    }
+
+    #back-button {
+        top: 10px;
+        left: 10px;
+        padding: 8px 14px;
+        font-size: 12px;
+    }
+
+    #music-toggle {
+        bottom: 10px;
+        left: 10px;
+        font-size: 12px;
+        padding: 6px 10px;
+    }
+
+    .start-box h1 {
+        font-size: 22px;
+    }
+
+    .start-box p {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hotspot {
+        width: 60px;
+        height: 60px;
+    }
+
+    .object-item img {
+        width: 40px;
+        height: 40px;
+    }
 }

@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Caça aos Objetos</title>
+    <title>Longe de Casa</title>
+    <link rel="preload" href="assets/fundo1.jpg" as="image">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -93,31 +94,48 @@
 <div id="game-container">
     <button id="back-button">Voltar</button>
 
-    <img id="game-image" src="assets/fundo1.jpg">
+    <div id="game-wrapper">
+        <img id="game-image" src="assets/fundo1.jpg">
 
-    <div class="hotspot" data-id="1" style="left: 77.8%; top: 81.5%;"></div>
-    <div class="hotspot" data-id="2" style="left: 77%; top: 11.1%;"></div>
-    <div class="hotspot" data-id="3" style="left: 74.8%; top: 0.5%;"></div>
-    <div class="hotspot" data-id="4" style="left: 40.3%; top: 13.1%;"></div>
-    <div class="hotspot" data-id="5" style="left: 20.7%; top: 23.8%;"></div>
-    <div class="hotspot" data-id="6" style="left: 33.4%; top: 17.5%;"></div>
-    <div class="hotspot" data-id="7" style="left: 33.5%; top: 32.2%;"></div>
+        <div class="hotspot" data-id="1" style="left: 83.7%; top: 82.7%;"></div>
+        <div class="hotspot" data-id="2" style="left: 82.8%; top: 12.2%;"></div>
+        <div class="hotspot" data-id="3" style="left: 80.0%; top: 1.3%;"></div>
+        <div class="hotspot" data-id="4" style="left: 11.3%; top: 49.6%;"></div>
+        <div class="hotspot" data-id="5" style="left: 37.6%; top: 81.1%;"></div>
+        <div class="hotspot" data-id="6" style="left: 31.3%; top: 18.5%;"></div>
+        <div class="hotspot" data-id="7" style="left: 31.4%; top: 32.7%;"></div>
+    </div>
 
     <div id="counter">0 / 7</div>
+
+    <!-- Controle de música -->
+    <button id="music-toggle" title="Música">&#9835; ON</button>
+    <audio id="bg-music" loop preload="auto">
+        <source src="assets/musica.mp3" type="audio/mpeg">
+    </audio>
 </div>
 
 <!-- FINAL -->
 <div id="congrats-modal">
     <div class="modal-content">
         <h2>Parabéns! Você encontrou todos os objetos!</h2>
-        <a href="https://linkdopresave.com" target="_blank" class="pre-save-btn">
+        <a href="https://sym.ffm.to/longedecasa_" target="_blank" class="pre-save-btn">
             Presave da música
         </a>
     </div>
 </div>
 
+<!-- Panzoom CDN -->
+<script src="https://cdn.jsdelivr.net/npm/@panzoom/panzoom@4.5.1/dist/panzoom.min.js"></script>
+
+<!-- Firebase SDKs (compat) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+
+<script src="firebase-config.js"></script>
 <script src="script.js"></script>
 <script src="timer.js"></script>
+<script src="debug.js"></script>
 
 </body>
 </html>
