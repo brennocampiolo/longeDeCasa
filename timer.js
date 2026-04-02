@@ -190,13 +190,12 @@ function mostrarScore(tempoFinal) {
             Salvar Recorde
         </button>
         <br><br>
-        <div id="ranking" style="width:100%; max-width:400px;"></div>
-        <br>
         <button id="continue" style="
             display:none; padding:12px 24px; font-size:16px; border:none;
-            cursor:pointer; background:green; color:white; border-radius:6px;">
+            cursor:pointer; background:green; color:white; border-radius:6px; margin-bottom:20px;">
             Continuar
         </button>
+        <div id="ranking" style="width:100%; max-width:400px;"></div>
     `;
 
     document.body.appendChild(screen);
@@ -204,6 +203,7 @@ function mostrarScore(tempoFinal) {
     const input = document.getElementById('nome');
     const save = document.getElementById('save');
     const cont = document.getElementById('continue');
+    let nomeJogador = '';
 
     input.addEventListener('input', () => {
         const valid = input.value.trim().length >= 3;
@@ -212,7 +212,10 @@ function mostrarScore(tempoFinal) {
     });
 
     save.onclick = () => {
-        salvar(input.value.trim(), tempoFinal);
+        nomeJogador = input.value.trim();
+        // Salva nome para uso na tela pós-jogo
+        localStorage.setItem('longeDeCasa_nomeJogador', nomeJogador);
+        salvar(nomeJogador, tempoFinal);
         save.style.display = 'none';
         input.style.display = 'none';
         cont.style.display = 'block';
@@ -220,10 +223,40 @@ function mostrarScore(tempoFinal) {
 
     cont.onclick = () => {
         screen.remove();
-        document.getElementById('congrats-modal').style.display = 'flex';
+        mostrarPresave();
     };
 
-    mostrarRanking();
+    mostrarRanking(nomeJogador);
+}
+
+// ===============================
+// TELA DE PRESAVE
+// ===============================
+function mostrarPresave() {
+    const modal = document.getElementById('congrats-modal');
+    modal.innerHTML = '';
+    modal.style.display = 'flex';
+
+    const content = document.createElement('div');
+    content.className = 'modal-content';
+    content.innerHTML = `
+        <h2>Parabéns! Você encontrou todos os objetos!</h2>
+        <a href="https://sym.ffm.to/longedecasa_" target="_blank" class="pre-save-btn">
+            Presave da música
+        </a>
+        <br><br>
+        <a id="voltar-pos-jogo" href="#" style="
+            color:rgba(255,255,255,0.6); text-decoration:none; font-size:14px;
+        ">&larr; Voltar</a>
+    `;
+    modal.appendChild(content);
+
+    document.getElementById('voltar-pos-jogo').addEventListener('click', (e) => {
+        e.preventDefault();
+        modal.style.display = 'none';
+        // Vai para tela pós-jogo (imagem + ranking)
+        if (typeof mostrarBloqueio === 'function') mostrarBloqueio();
+    });
 }
 
 // ===============================
@@ -253,15 +286,20 @@ async function salvar(nome, tempoFinal) {
     // Limpa tempo acumulado após salvar
     localStorage.removeItem('longeDeCasa_tempoAcumulado');
 
-    mostrarRanking();
+    mostrarRanking(nome);
 }
 
 // ===============================
 // RANKING (TOP 50)
 // ===============================
-async function mostrarRanking() {
+async function mostrarRanking(nomeJogador) {
     const div = document.getElementById('ranking');
     if (!div) return;
+
+    // Tenta nome salvo se não veio por parâmetro
+    if (!nomeJogador) {
+        nomeJogador = localStorage.getItem('longeDeCasa_nomeJogador') || '';
+    }
 
     let dados = [];
 
@@ -289,6 +327,32 @@ async function mostrarRanking() {
         return;
     }
 
+    // Encontra a posição do jogador atual no ranking
+    let jogadorIndex = -1;
+    if (nomeJogador) {
+        jogadorIndex = dados.findIndex(p => p.nome === nomeJogador);
+    }
+
+    const highlightStyle = 'background:rgba(0,200,0,0.15); font-weight:bold;';
+
+    function criarLinha(p, i, isHighlight) {
+        const tr = document.createElement('tr');
+        tr.style.borderBottom = '1px solid #222';
+        if (isHighlight) tr.style.cssText += highlightStyle;
+
+        let medal = '';
+        if (i === 0) medal = ' &#129351;';
+        else if (i === 1) medal = ' &#129352;';
+        else if (i === 2) medal = ' &#129353;';
+
+        tr.innerHTML = `
+            <td style="padding:6px;">${i + 1}${medal}</td>
+            <td style="padding:6px;">${p.nome}${isHighlight ? ' &#9733;' : ''}</td>
+            <td style="padding:6px; text-align:right;">${formatTime(p.tempo)}</td>
+        `;
+        return tr;
+    }
+
     const table = document.createElement('table');
     table.style.cssText = 'width:100%; border-collapse:collapse; font-size:14px;';
 
@@ -303,21 +367,22 @@ async function mostrarRanking() {
     `;
 
     const tbody = document.createElement('tbody');
+
+    // Se o jogador não é o #1, mostra ele destacado no topo
+    if (jogadorIndex > 0) {
+        const jogador = dados[jogadorIndex];
+        tbody.appendChild(criarLinha(jogador, jogadorIndex, true));
+
+        // Separador visual
+        const sep = document.createElement('tr');
+        sep.innerHTML = '<td colspan="3" style="padding:2px 0; border-bottom:2px solid #444;"></td>';
+        tbody.appendChild(sep);
+    }
+
+    // Lista completa do ranking
     dados.forEach((p, i) => {
-        const tr = document.createElement('tr');
-        tr.style.borderBottom = '1px solid #222';
-
-        let medal = '';
-        if (i === 0) medal = ' &#129351;';
-        else if (i === 1) medal = ' &#129352;';
-        else if (i === 2) medal = ' &#129353;';
-
-        tr.innerHTML = `
-            <td style="padding:6px;">${i + 1}${medal}</td>
-            <td style="padding:6px;">${p.nome}</td>
-            <td style="padding:6px; text-align:right;">${formatTime(p.tempo)}</td>
-        `;
-        tbody.appendChild(tr);
+        const isJogador = (i === jogadorIndex);
+        tbody.appendChild(criarLinha(p, i, isJogador));
     });
 
     table.appendChild(tbody);

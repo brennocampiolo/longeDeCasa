@@ -35,8 +35,9 @@ function marcarComoJogou() {
 // NAVEGACAO DE TELAS
 // ===============================
 // Se já jogou, vai direto para pós-jogo sem precisar clicar
+// Usa setTimeout(0) para garantir que timer.js carregou (mostrarRanking)
 if (jaJogou()) {
-    mostrarBloqueio();
+    setTimeout(() => mostrarBloqueio(), 0);
 }
 
 startButton.addEventListener('click', () => {
@@ -62,7 +63,17 @@ backButton.addEventListener('click', () => {
 // ===============================
 // TELA DE BLOQUEIO
 // ===============================
+let bloqueioAtivo = false;
 function mostrarBloqueio() {
+    // Evita duplicação se chamado mais de uma vez (ex: voltar do presave)
+    if (bloqueioAtivo) {
+        // Apenas scroll para o topo e atualiza ranking
+        window.scrollTo(0, 0);
+        if (typeof mostrarRanking === 'function') mostrarRanking();
+        return;
+    }
+    bloqueioAtivo = true;
+
     startScreen.style.display = 'none';
     document.body.style.overflow = 'visible';
     document.body.style.overflowX = 'hidden';
@@ -105,6 +116,7 @@ function mostrarBloqueio() {
 
     // === Indicador "Ranking ↓" (fixed bottom-right) ===
     const indicator = document.createElement('div');
+    indicator.id = 'ranking-indicator';
     indicator.style.cssText = `
         position:fixed; bottom:20px; right:20px;
         background:rgba(0,0,0,0.75); color:white;
@@ -141,7 +153,7 @@ function mostrarBloqueio() {
     }, { threshold: 0.1 });
     observer.observe(rankingSection);
 
-    // Carrega ranking (mostrarRanking definida em timer.js, já carregado)
+    // Carrega ranking
     if (typeof mostrarRanking === 'function') mostrarRanking();
 }
 
