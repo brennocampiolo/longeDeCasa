@@ -173,9 +173,10 @@ function mostrarScore(tempoFinal) {
         width:100%; height:100%;
         background:black;
         display:flex; flex-direction:column;
-        justify-content:center; align-items:center;
+        align-items:center;
         color:white; z-index:4000;
-        padding:20px; box-sizing:border-box;
+        padding:40px 20px; box-sizing:border-box;
+        overflow-y:auto; -webkit-overflow-scrolling:touch;
     `;
 
     screen.innerHTML = `

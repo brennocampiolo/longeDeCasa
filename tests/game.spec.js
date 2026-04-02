@@ -134,19 +134,55 @@ test.describe('Longe de Casa - Jogo', () => {
         await page.screenshot({ path: `${SCREENSHOTS}/09-parabens.png`, fullPage: true });
     });
 
-    test('07 - Bloqueio impede segunda tentativa', async ({ page }) => {
+    test('07 - Pós-jogo carrega direto sem clicar', async ({ page }) => {
         await page.evaluate(() => {
             localStorage.setItem('longeDeCasa_jogou', 'true');
         });
         await page.reload({ waitUntil: 'domcontentloaded' });
+
+        // Deve ir direto para pós-jogo sem precisar clicar em nada
+        await expect(page.locator('#start-screen')).toBeHidden({ timeout: 10000 });
+        await expect(page.locator('#game-container')).toBeVisible({ timeout: 10000 });
+        await expect(page.locator('#ranking-section')).toBeAttached({ timeout: 5000 });
+        await page.screenshot({ path: `${SCREENSHOTS}/10-pos-jogo-direto.png`, fullPage: true });
+    });
+
+    test('07b - Score screen com ranking grande é scrollável', async ({ page }) => {
+        // Injeta ranking fake grande no localStorage
+        const fakeRanking = Array.from({ length: 50 }, (_, i) => ({
+            nome: `Jogador${i + 1}`,
+            tempo: 60 + i
+        }));
+        await page.evaluate((r) => {
+            localStorage.setItem('ranking', JSON.stringify(r));
+        }, fakeRanking);
+        await page.reload({ waitUntil: 'domcontentloaded' });
         await page.waitForSelector('#start-screen', { state: 'visible', timeout: 10000 });
 
-        await page.locator('#start-button').click();
-        // Tela pós-jogo: start-screen escondido, game-container visível, ranking indicator visível
-        await expect(page.locator('#start-screen')).toBeHidden({ timeout: 5000 });
-        await expect(page.locator('#game-container')).toBeVisible({ timeout: 5000 });
-        await expect(page.locator('#ranking-section')).toBeAttached({ timeout: 5000 });
-        await page.screenshot({ path: `${SCREENSHOTS}/10-bloqueio.png`, fullPage: true });
+        await navegarAteJogo(page);
+
+        // Encontra todos os hotspots para chegar na score screen
+        const hotspots = page.locator('.hotspot');
+        for (let i = 0; i < 7; i++) {
+            await clickHotspot(hotspots.nth(i));
+        }
+
+        // Score screen aparece
+        const scoreScreen = page.locator('#score-screen');
+        await expect(scoreScreen).toBeVisible({ timeout: 5000 });
+
+        // Preenche nome e salva para mostrar botão Continuar
+        await page.locator('#nome').fill('TestScroll');
+        await page.locator('#save').click();
+
+        // Botão Continuar deve existir
+        const continueBtn = page.locator('#continue');
+        await expect(continueBtn).toBeAttached({ timeout: 5000 });
+
+        // Scroll até o botão Continuar (simula mobile com ranking grande)
+        await continueBtn.scrollIntoViewIfNeeded();
+        await expect(continueBtn).toBeVisible({ timeout: 5000 });
+        await page.screenshot({ path: `${SCREENSHOTS}/10b-score-scroll.png`, fullPage: true });
     });
 
     test('08 - Botão de música existe e responde ao clique', async ({ page }) => {

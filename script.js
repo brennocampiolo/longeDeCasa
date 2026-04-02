@@ -34,6 +34,11 @@ function marcarComoJogou() {
 // ===============================
 // NAVEGACAO DE TELAS
 // ===============================
+// Se já jogou, vai direto para pós-jogo sem precisar clicar
+if (jaJogou()) {
+    mostrarBloqueio();
+}
+
 startButton.addEventListener('click', () => {
     if (jaJogou()) {
         mostrarBloqueio();
