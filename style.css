@@ -14,7 +14,9 @@ body {
     position: fixed;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.9);
+    background: 
+        linear-gradient(rgba(0,0,0,0.9), rgba(0,0,0,0.9)),
+        url('assets/fundo2.jpg') center/cover no-repeat;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -28,7 +30,51 @@ body {
     padding: 20px;
 }
 
+.start-image {
+    transform: translateY(-170px);
+    width: 900px;
+    max-width: 90%;
+    margin-bottom: 20px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* TAGLINE */
+.tagline {
+    transform: translateY(-75px);
+    font-size: 12px;
+    color: rgb(255, 255, 255);
+    opacity: 0.6;
+    margin-top: -120px; 
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+}
+
+.main-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    font-size: 14px;
+    opacity: 0.7;
+    margin-bottom: 20px;
+}
+
+.sponsor-logo {
+    position: fixed;
+    bottom: 20px;
+    right: -20px;
+    width: 200px;
+    max-width: 25%;
+    opacity: 0.8;
+}
+
 #start-button {
+    transform: translateY(100px);
     padding: 12px 24px;
     font-size: 16px;
     border: none;
@@ -43,6 +89,114 @@ body {
 }
 
 /* ========================= */
+/* INTRO SCREEN */
+/* ========================= */
+#intro-screen {
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: 
+        linear-gradient(rgba(0,0,0,0.9), rgba(0,0,0,0.9)),
+        url('assets/fundo2.jpg') center/cover no-repeat;
+    z-index: 1000;
+}
+/* CONTEÚDO DA INTRO */
+.intro-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+    width: 90%;
+    max-width: 380px;
+
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+
+    border-radius: 20px;
+    padding: 30px 25px;
+
+    box-shadow: 0 0 40px rgba(0,0,0,0.6);
+
+    color: white;
+    text-align: center;
+}
+
+.intro-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+}
+
+.intro-subtitle {
+    font-size: 14px;
+    margin-top: 25px;
+    margin-bottom: 8px;
+    opacity: 0.6;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.intro-text {
+    font-size: 14px;
+    opacity: 0.75;
+    line-height: 1.6;
+}
+
+.intro-rules li{
+    position: absolute;
+    left: 0;
+    font-size: 14px;
+    opacity: 0.85;
+    margin-bottom: 8px;
+    position: relative;
+    padding-left: 18px;
+}
+
+.intro-rules li {
+    font-size: 14px;
+    opacity: 0.8;
+    margin-bottom: 6px;
+}
+
+/* BOTÃO VOLTAR */
+#intro-back {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background: red;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+#intro-back:hover {
+    background: darkred;
+}
+
+/* BOTÃO AVANÇAR */
+#intro-advance {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: green;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#intro-advance:hover {
+    background: #00cc00;
+}
+
+/* ========================= */
 /* PREVIEW */
 /* ========================= */
 #preview-screen {
@@ -51,7 +205,9 @@ body {
     top: 0; left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.95);
+    background: 
+        linear-gradient(rgba(0,0,0,0.9), rgba(0,0,0,0.9)),
+        url('assets/fundo2.jpg') center/cover no-repeat;
     justify-content: center;
     align-items: center;
     z-index: 1000;
@@ -61,6 +217,23 @@ body {
     box-sizing: border-box;
     overflow-y: auto;
 }
+#preview-back {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background: red;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    z-index: 1100;
+}
+
+#preview-back:hover {
+    background: darkred;
+}
 
 .preview-box {
     max-width: 900px;
@@ -69,7 +242,10 @@ body {
 }
 
 #advance-button {
-    margin-top: 20px;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+
     padding: 12px 30px;
     background-color: green;
     color: white;
@@ -77,12 +253,197 @@ body {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+
+    z-index: 1100;
 }
 
 #advance-button:hover {
     background-color: #00cc00;
 }
+/* Fade da tela */
+#intro-screen {
+    opacity: 0;
+    animation: introFade 1.2s ease forwards;
+}
 
+@keyframes introFade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Caixa subindo + zoom */
+.intro-content {
+    opacity: 0;
+    transform: translate(-50%, -40%) scale(0.95);
+    animation: introBox 1s ease forwards;
+    animation-delay: 0.2s;
+}
+
+@keyframes introBox {
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+/* Textos aparecendo */
+.intro-title,
+.intro-text,
+.intro-subtitle,
+.intro-rules li {
+    opacity: 0;
+    transform: translateY(10px);
+    animation: introText 0.8s ease forwards;
+}
+
+.intro-title { animation-delay: 0.3s; }
+.intro-text { animation-delay: 0.45s; }
+
+.intro-subtitle:nth-of-type(1) { animation-delay: 0.6s; }
+.intro-subtitle:nth-of-type(2) { animation-delay: 0.75s; }
+
+.intro-rules li:nth-child(1) { animation-delay: 0.9s; }
+.intro-rules li:nth-child(2) { animation-delay: 1s; }
+.intro-rules li:nth-child(3) { animation-delay: 1.1s; }
+.intro-rules li:nth-child(4) { animation-delay: 1.2s; }
+
+@keyframes introText {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Botões aparecendo por último */
+#intro-back,
+#intro-advance {
+    opacity: 0;
+    animation: introButtons 0.8s ease forwards;
+    animation-delay: 1.3s;
+}
+/* ========================= */
+/* ANIMAÇÃO PREVIEW SCREEN */
+/* ========================= */
+
+/* Fade da tela */
+#preview-screen {
+    opacity: 0;
+    animation: previewFade 1.2s ease forwards;
+}
+
+@keyframes previewFade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Caixa principal */
+.preview-box {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+    animation: previewBox 1s ease forwards;
+    animation-delay: 0.2s;
+}
+
+@keyframes previewBox {
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Itens da lista aparecendo em sequência */
+.object-item {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: previewItem 0.6s ease forwards;
+}
+
+.object-item:nth-child(1) { animation-delay: 0.3s; }
+.object-item:nth-child(2) { animation-delay: 0.4s; }
+.object-item:nth-child(3) { animation-delay: 0.5s; }
+.object-item:nth-child(4) { animation-delay: 0.6s; }
+.object-item:nth-child(5) { animation-delay: 0.7s; }
+.object-item:nth-child(6) { animation-delay: 0.8s; }
+.object-item:nth-child(7) { animation-delay: 0.9s; }
+
+@keyframes previewItem {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Botões aparecendo por último */
+#preview-back,
+#advance-button {
+    opacity: 0;
+    animation: previewButtons 0.8s ease forwards;
+    animation-delay: 1.1s;
+}
+
+@keyframes previewButtons {
+    to { opacity: 1; }
+}
+@keyframes introButtons {
+    to { opacity: 1; }
+}
+#start-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    background: black;
+
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    z-index: 3000;
+}
+
+/* Spinner */
+#loading-spinner {
+    width: 48px;
+    height: 48px;
+    border: 4px solid rgba(255,255,255,0.2);
+    border-top: 4px solid white;
+    border-radius: 50%;
+    animation: spin 1.2s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Texto de aviso */
+#start-warning {
+    margin-top: 20px;
+    color: rgba(255,255,255,0.7);
+    font-size: 14px;
+    text-align: center;
+    max-width: 300px;
+}
+
+/* Botão */
+#start-game-btn {
+    margin-top: 25px;
+    padding: 20px 50px;
+    font-size: 22px;
+    background: green;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+
+    display: none;
+}
+
+#start-game-btn:hover {
+    background: #00cc00;
+}
 /* ========================= */
 /* JOGO */
 /* ========================= */
@@ -208,12 +569,15 @@ body {
     border-radius: 10px;
     transition: 0.3s;
 }
-
 .object-item img {
-    width: 60px;
-    height: 60px;
+    width: 100px;
+    height: 100px;
     border-radius: 8px;
     object-fit: cover;
+}
+.object-item[data-id="6"] img {
+    width: 150px;
+    height: 150px;
 }
 
 .object-item.found {
@@ -293,9 +657,6 @@ body {
     }
 
     #advance-button {
-        position: relative;
-        bottom: auto;
-        right: auto;
         width: 100%;
         margin-top: 20px;
     }
@@ -325,12 +686,8 @@ body {
         padding: 6px 10px;
     }
 
-    .start-box h1 {
-        font-size: 22px;
-    }
-
-    .start-box p {
-        font-size: 14px;
+    .tagline {
+        margin-top: -40px;
     }
 }
 

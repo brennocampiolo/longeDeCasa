@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Longe de Casa</title>
-    <link rel="preload" href="assets/fundo1.jpg" as="image">
+    <link rel="preload" href="assets/fundo2.jpg" as="image">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -12,19 +12,59 @@
 <!-- TELA INICIAL -->
 <div id="start-screen">
     <div class="start-box">
-        <h1>Encontre os 7 Objetos</h1>
-        <p>
-            Explore a imagem e encontre todos os objetos escondidos.<br>
-            Clique nos lugares corretos para marcar.
+        <img src="assets/LogoSiteHanssy.png" class="start-image">
+        <p class="tagline">Jogo oficial • Ranking aberto</p>
+        <h2 class="main-title">Apenas 3 pessoas vão ganhar ...</h2>
+
+        <p class="subtitle">
+    Encontre os 7 objetos perdidos e garanta seu lugar no ranking.
         </p>
-        <button id="start-button">Começar</button>
+        <button id="start-button">JOGAR AGORA</button>
     </div>
+    <img src="assets/logoHanssySite.png" class="sponsor-logo">
+</div>
+
+//TELA DE INTRODUÇÃO ADICIONADA
+<div id="intro-screen">
+
+    <button id="intro-back">Voltar</button>
+
+    <div class="intro-content">
+
+        <h2 class="intro-title">Como funciona?</h2>
+
+        <p class="intro-text">
+            Encontre os 7 objetos perdidos o mais rápido que puder.<br>
+            Seu tempo será registrado automaticamente no ranking.
+        </p>
+
+        <h3 class="intro-subtitle">Premiação</h3>
+
+        <p class="intro-text">
+            Os 3 melhores tempos serão premiados com peças da 
+            <strong>Hanssy Clothing</strong>.
+        </p>
+
+        <h3 class="intro-subtitle">Regras para receber o prêmio</h3>
+
+        <ul class="intro-rules">
+            <li>Estar nas 3 primeiras posições do ranking.</li>
+            <li>Ter feito o pre-save da música.</li>
+            <li>Seguir @hanssyclothing no Instagram.</li>
+            <li>Seguir @ehssi_ no Instagram.</li>
+        </ul>
+
+    </div>
+
+    <button id="intro-advance">Avançar</button>
+
 </div>
 
 <!-- PREVIEW -->
 <div id="preview-screen">
+    <button id="preview-back">Voltar</button>
     <div class="preview-box">
-        <h2>Conheça os objetos:</h2>
+        <h2>Itens desaparecidos:</h2>
 
         <div class="object-list">
 
@@ -40,7 +80,7 @@
                 <img src="assets/objeto2.png">
                 <div class="object-info">
                     <h3>Espelho</h3>
-                    <p>Objeto utilizado para enxergar o próprio reflexo, ou seu único inimigo.</p>
+                    <p>Objeto utilizado para enxergar o próprio reflexo, ou seu maior inimigo.</p>
                 </div>
             </div>
 
@@ -90,12 +130,23 @@
     </div>
 </div>
 
+<!-- TELA PRETA (LOADING + INICIAR) -->
+<div id="start-overlay">
+    <div id="loading-spinner"></div>
+
+    <p id="start-warning">
+         Ao clicar em iniciar, seu tempo começará e você terá apenas uma tentativa.
+    </p>
+
+    <button id="start-game-btn">Iniciar</button>
+</div>
+
 <!-- JOGO -->
 <div id="game-container">
     <button id="back-button">Voltar</button>
 
     <div id="game-wrapper">
-        <img id="game-image" src="assets/fundo1.jpg">
+        <img id="game-image" src="assets/fundo2.jpg">
 
         <div class="hotspot" data-id="1" style="left: 83.7%; top: 82.7%;"></div>
         <div class="hotspot" data-id="2" style="left: 82.8%; top: 12.2%;"></div>
