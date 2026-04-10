@@ -133,103 +133,96 @@ function mostrarScore(tempoFinal) {
     screen.innerHTML = `
         <h2>Tempo: ${formatTime(tempoFinal)}</h2>
 
-        <div id="login-options" style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin:12px 0;">
-            <button id="google-login" style="
-                padding:10px 18px; font-size:14px; border:none; cursor:pointer;
-                background:white; color:#444; border-radius:8px; font-weight:bold;
-                display:flex; align-items:center; gap:8px;
-            ">
-                <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#34A853" d="M10.53 28.59a14.5 14.5 0 0 1 0-9.18l-7.98-6.19a24.01 24.01 0 0 0 0 21.56l7.98-6.19z"/><path fill="#FBBC05" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
-                Google
-            </button>
-            <button id="ig-login" style="
-                padding:10px 18px; font-size:14px; border:none; cursor:pointer;
-                background:linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
-                color:white; border-radius:8px; font-weight:bold;
-            ">
-                @ Instagram
-            </button>
-        </div>
+        <p style="color:rgba(255,255,255,0.5); font-size:13px; margin:4px 0 16px;">
+            Entre com Google para salvar no ranking
+        </p>
 
-        <p id="login-divider" style="color:rgba(255,255,255,0.3); font-size:12px; margin:8px 0;">ou digite seu nome</p>
-
-        <input id="nome" placeholder="Seu nome (mín. 3 letras)"
-            style="padding:10px; font-size:16px; border-radius:6px; border:none; text-align:center; width:250px; max-width:90%;">
-        <br><br>
-        <button id="save" disabled style="
+        <button id="google-login" style="
             padding:12px 24px; font-size:16px; border:none; cursor:pointer;
-            background:gray; color:white; border-radius:6px;">
-            Salvar Recorde
+            background:white; color:#444; border-radius:8px; font-weight:bold;
+            display:flex; align-items:center; gap:10px;
+        ">
+            <svg width="20" height="20" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#34A853" d="M10.53 28.59a14.5 14.5 0 0 1 0-9.18l-7.98-6.19a24.01 24.01 0 0 0 0 21.56l7.98-6.19z"/><path fill="#FBBC05" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+            Entrar com Google
         </button>
-        <br><br>
+
+        <div id="login-msg" style="display:none; margin:16px 0; font-size:14px; text-align:center;"></div>
+
         <button id="continue" style="
             display:none; padding:12px 24px; font-size:16px; border:none;
-            cursor:pointer; background:green; color:white; border-radius:6px; margin-bottom:20px;">
+            cursor:pointer; background:green; color:white; border-radius:6px; margin:16px 0 20px;">
             Continuar
         </button>
-        <div id="ranking" style="width:100%; max-width:400px;"></div>
+
+        <a id="skip-login" href="#" style="
+            color:rgba(255,255,255,0.3); font-size:12px; text-decoration:none; margin-top:8px;
+        ">Pular</a>
+
+        <div id="ranking" style="width:100%; max-width:400px; margin-top:20px;"></div>
     `;
 
     document.body.appendChild(screen);
 
-    const input = document.getElementById('nome');
-    const save = document.getElementById('save');
     const cont = document.getElementById('continue');
+    const loginBtn = document.getElementById('google-login');
+    const loginMsg = document.getElementById('login-msg');
+    const skipLink = document.getElementById('skip-login');
     let nomeJogador = '';
 
-    input.addEventListener('input', () => {
-        const valid = input.value.trim().length >= 3;
-        save.disabled = !valid;
-        save.style.background = valid ? 'green' : 'gray';
-    });
-
     // --- Login com Google ---
-    document.getElementById('google-login').addEventListener('click', async () => {
+    loginBtn.addEventListener('click', async () => {
+        loginBtn.disabled = true;
+        loginBtn.style.opacity = '0.6';
         try {
             const provider = new firebase.auth.GoogleAuthProvider();
             const result = await firebase.auth().signInWithPopup(provider);
-            const nome = result.user.displayName || result.user.email;
-            if (nome) {
-                input.value = nome;
-                input.dispatchEvent(new Event('input'));
-                document.getElementById('login-options').style.display = 'none';
-                document.getElementById('login-divider').style.display = 'none';
+            const user = result.user;
+            const nome = user.displayName || user.email;
+            const uid = user.uid;
+
+            // Verifica se já está no ranking (proteção contra múltiplas tentativas)
+            if (typeof firebaseReady !== 'undefined' && firebaseReady && db) {
+                const existing = await db.collection('ranking').where('uid', '==', uid).get();
+                if (!existing.empty) {
+                    const entry = existing.docs[0].data();
+                    loginBtn.style.display = 'none';
+                    skipLink.style.display = 'none';
+                    loginMsg.style.display = 'block';
+                    loginMsg.innerHTML = `
+                        <span style="color:#ff6b6b;">Você já está no ranking!</span><br>
+                        <span style="opacity:0.6; font-size:12px;">
+                            ${entry.nome} — ${formatTime(entry.tempo)}
+                        </span>
+                    `;
+                    nomeJogador = entry.nome;
+                    cont.style.display = 'block';
+                    mostrarRanking(nomeJogador);
+                    return;
+                }
             }
+
+            // Salva no ranking
+            nomeJogador = nome;
+            localStorage.setItem('longeDeCasa_nomeJogador', nome);
+            await salvar(nome, tempoFinal, uid);
+
+            loginBtn.style.display = 'none';
+            skipLink.style.display = 'none';
+            loginMsg.style.display = 'block';
+            loginMsg.innerHTML = `Salvo como <strong>${nome}</strong>`;
+            cont.style.display = 'block';
         } catch (err) {
             console.warn('Login Google cancelado ou falhou:', err);
+            loginBtn.disabled = false;
+            loginBtn.style.opacity = '1';
         }
     });
 
-    // --- Login com Instagram (via Facebook/Meta Auth) ---
-    document.getElementById('ig-login').addEventListener('click', async () => {
-        try {
-            const provider = new firebase.auth.FacebookAuthProvider();
-            provider.addScope('email');
-            const result = await firebase.auth().signInWithPopup(provider);
-            const nome = result.user.displayName || result.user.email;
-            if (nome) {
-                input.value = nome;
-                input.dispatchEvent(new Event('input'));
-                document.getElementById('login-options').style.display = 'none';
-                document.getElementById('login-divider').style.display = 'none';
-            }
-        } catch (err) {
-            console.warn('Login Instagram/Meta cancelado ou falhou:', err);
-        }
+    skipLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        screen.remove();
+        mostrarPresave();
     });
-
-    save.onclick = () => {
-        nomeJogador = input.value.trim();
-        localStorage.setItem('longeDeCasa_nomeJogador', nomeJogador);
-        salvar(nomeJogador, tempoFinal);
-        save.style.display = 'none';
-        input.style.display = 'none';
-        const opts = document.getElementById('login-options');
-        if (opts) opts.style.display = 'none';
-        const div = document.getElementById('login-divider');
-        if (div) div.style.display = 'none';
-        cont.style.display = 'block';
-    };
 
     cont.onclick = () => {
         screen.remove();
@@ -271,10 +264,10 @@ function mostrarPresave() {
 // ===============================
 // SALVAR RESULTADO
 // ===============================
-async function salvar(nome, tempoFinal) {
+async function salvar(nome, tempoFinal, uid) {
     // localStorage como fallback
     let r = JSON.parse(localStorage.getItem('ranking')) || [];
-    r.push({ nome, tempo: tempoFinal });
+    r.push({ nome, tempo: tempoFinal, uid: uid || null });
     r.sort((a, b) => a.tempo - b.tempo);
     r = r.slice(0, 50);
     localStorage.setItem('ranking', JSON.stringify(r));
@@ -285,6 +278,7 @@ async function salvar(nome, tempoFinal) {
             await db.collection('ranking').add({
                 nome: nome,
                 tempo: tempoFinal,
+                uid: uid || null,
                 data: new Date().toISOString()
             });
         } catch (err) {

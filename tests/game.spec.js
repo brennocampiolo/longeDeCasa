@@ -128,13 +128,11 @@ test.describe('Longe de Casa - Jogo', () => {
 
         const scoreScreen = page.locator('#score-screen');
         await expect(scoreScreen).toBeVisible({ timeout: 5000 });
+        await expect(page.locator('#google-login')).toBeVisible({ timeout: 5000 });
         await page.screenshot({ path: `${SCREENSHOTS}/07-tela-score.png`, fullPage: true });
 
-        await page.locator('#nome').fill('TestPlayer');
-        await page.locator('#save').click();
-        await page.screenshot({ path: `${SCREENSHOTS}/08-score-salvo.png`, fullPage: true });
-
-        await page.locator('#continue').click();
+        // Pula login (não é possível simular Google Auth em testes)
+        await page.locator('#skip-login').click();
         await expect(page.locator('#congrats-modal')).toBeVisible({ timeout: 5000 });
         await page.screenshot({ path: `${SCREENSHOTS}/09-parabens.png`, fullPage: true });
     });
@@ -152,26 +150,20 @@ test.describe('Longe de Casa - Jogo', () => {
         await page.screenshot({ path: `${SCREENSHOTS}/10-pos-jogo-direto.png`, fullPage: true });
     });
 
-    test('07c - Retorno sem nome salvo mostra score screen', async ({ page }) => {
-        // Simula: jogou, finalizou, mas saiu sem salvar nome
+    test('07c - Retorno sem login mostra score screen com Google login', async ({ page }) => {
+        // Simula: jogou, finalizou, mas saiu sem fazer login
         await page.evaluate(() => {
             localStorage.setItem('longeDeCasa_jogou', 'true');
             localStorage.setItem('longeDeCasa_tempoFinal', '95');
         });
         await page.reload({ waitUntil: 'domcontentloaded' });
 
-        // Deve mostrar score screen com campo de nome
+        // Deve mostrar score screen com botão de Google login
         const scoreScreen = page.locator('#score-screen');
         await expect(scoreScreen).toBeVisible({ timeout: 10000 });
-        await expect(page.locator('#nome')).toBeVisible({ timeout: 5000 });
-
-        // Salva nome
-        await page.locator('#nome').fill('RetornoTest');
-        await page.locator('#save').click();
-
-        // Botão continuar aparece
-        await expect(page.locator('#continue')).toBeVisible({ timeout: 5000 });
-        await page.screenshot({ path: `${SCREENSHOTS}/10c-retorno-sem-nome.png`, fullPage: true });
+        await expect(page.locator('#google-login')).toBeVisible({ timeout: 5000 });
+        await expect(page.locator('#skip-login')).toBeVisible({ timeout: 5000 });
+        await page.screenshot({ path: `${SCREENSHOTS}/10c-retorno-sem-login.png`, fullPage: true });
     });
 
     test('07b - Score screen com ranking grande é scrollável', async ({ page }) => {
@@ -198,17 +190,13 @@ test.describe('Longe de Casa - Jogo', () => {
         const scoreScreen = page.locator('#score-screen');
         await expect(scoreScreen).toBeVisible({ timeout: 5000 });
 
-        // Preenche nome e salva para mostrar botão Continuar
-        await page.locator('#nome').fill('TestScroll');
-        await page.locator('#save').click();
+        // Verifica que Google login e Pular estão visíveis
+        await expect(page.locator('#google-login')).toBeVisible({ timeout: 5000 });
 
-        // Botão Continuar deve existir
-        const continueBtn = page.locator('#continue');
-        await expect(continueBtn).toBeAttached({ timeout: 5000 });
-
-        // Scroll até o botão Continuar (simula mobile com ranking grande)
-        await continueBtn.scrollIntoViewIfNeeded();
-        await expect(continueBtn).toBeVisible({ timeout: 5000 });
+        // Scroll até o link Pular (simula mobile com ranking grande)
+        const skipLink = page.locator('#skip-login');
+        await skipLink.scrollIntoViewIfNeeded();
+        await expect(skipLink).toBeVisible({ timeout: 5000 });
         await page.screenshot({ path: `${SCREENSHOTS}/10b-score-scroll.png`, fullPage: true });
     });
 
