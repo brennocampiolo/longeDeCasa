@@ -538,6 +538,26 @@ body {
 }
 
 /* BOTAO MUSICA */
+#game-presave {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.6);
+    color: white;
+    text-decoration: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    z-index: 100;
+    border: 1px solid rgba(255,255,255,0.15);
+    transition: background-color 0.2s;
+}
+
+#game-presave:hover {
+    background: rgba(0,0,0,0.8);
+}
+
 #music-toggle {
     position: fixed;
     bottom: 20px;
