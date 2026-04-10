@@ -2,13 +2,13 @@
 // FIREBASE CONFIG
 // ===============================
 const firebaseConfig = {
-    apiKey: "AIzaSyBE6eGkFeWfthTD4unw8Y31nC_t-HwICJ0",
-    authDomain: "longedecasa-2e44d.firebaseapp.com",
-    projectId: "longedecasa-2e44d",
-    storageBucket: "longedecasa-2e44d.firebasestorage.app",
-    messagingSenderId: "368018292622",
-    appId: "1:368018292622:web:3db08ed9e04471dd916edf",
-    measurementId: "G-G1XKE1SHEX"
+    apiKey: "AIzaSyDv4_ciYvG01_25PSnmk3CWxn3fQhWY-tk",
+    authDomain: "longedecasa-ff1ca.firebaseapp.com",
+    projectId: "longedecasa-ff1ca",
+    storageBucket: "longedecasa-ff1ca.firebasestorage.app",
+    messagingSenderId: "469114564620",
+    appId: "1:469114564620:web:ed38bbb1bacaf9eb483e29",
+    measurementId: "G-7MQ7MMQKGJ"
 };
 
 firebase.initializeApp(firebaseConfig);
