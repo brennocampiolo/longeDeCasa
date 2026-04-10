@@ -215,6 +215,12 @@ function mostrarScore(tempoFinal) {
             console.warn('Login Google cancelado ou falhou:', err);
             loginBtn.disabled = false;
             loginBtn.style.opacity = '1';
+
+            if (err.code && err.code !== 'auth/popup-closed-by-user' && err.code !== 'auth/cancelled-popup-request') {
+                loginMsg.style.display = 'block';
+                loginMsg.innerHTML = '<span style="color:#ff6b6b;">Erro no login. Tente novamente.</span>';
+                setTimeout(() => { loginMsg.style.display = 'none'; }, 4000);
+            }
         }
     });
 
