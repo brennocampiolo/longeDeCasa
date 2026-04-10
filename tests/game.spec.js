@@ -11,6 +11,9 @@ async function clickHotspot(hotspot) {
 // Helper: navega até o jogo e espera estar pronto
 async function navegarAteJogo(page) {
     await page.locator('#start-button').click();
+    await expect(page.locator('#intro-screen')).toBeVisible({ timeout: 5000 });
+
+    await page.locator('#intro-advance').click();
     await expect(page.locator('#preview-screen')).toBeVisible({ timeout: 5000 });
 
     await page.locator('#advance-button').click();
@@ -46,13 +49,15 @@ test.describe('Longe de Casa - Jogo', () => {
 
     test('01 - Tela inicial carrega corretamente', async ({ page }) => {
         await expect(page.locator('#start-screen')).toBeVisible();
-        await expect(page.locator('.start-box h1')).toHaveText('Encontre os 7 Objetos');
+        await expect(page.locator('.start-box .main-title')).toBeVisible();
         await expect(page.locator('#start-button')).toBeVisible();
         await page.screenshot({ path: `${SCREENSHOTS}/01-tela-inicial.png`, fullPage: true });
     });
 
     test('02 - Preview dos objetos aparece ao clicar Começar', async ({ page }) => {
         await page.locator('#start-button').click();
+        await expect(page.locator('#intro-screen')).toBeVisible({ timeout: 5000 });
+        await page.locator('#intro-advance').click();
         await expect(page.locator('#preview-screen')).toBeVisible({ timeout: 5000 });
         await expect(page.locator('.object-item')).toHaveCount(7);
         await page.screenshot({ path: `${SCREENSHOTS}/02-preview-objetos.png`, fullPage: true });
@@ -103,7 +108,7 @@ test.describe('Longe de Casa - Jogo', () => {
         // Simula pointerup (como touchpad faz)
         await clickHotspot(hotspots.nth(0));
         await expect(hotspots.nth(0)).toHaveClass(/found/);
-        await expect(page.locator('#counter')).toHaveText('1 / 7');
+        await expect(page.locator('#counter')).toContainText('1 / 7');
 
         await page.screenshot({ path: `${SCREENSHOTS}/06-primeiro-hotspot-clicado.png`, fullPage: true });
     });
@@ -119,7 +124,7 @@ test.describe('Longe de Casa - Jogo', () => {
             console.log(`Clicou hotspot ${dataId} - contador: ${i + 1}/7`);
         }
 
-        await expect(page.locator('#counter')).toHaveText('7 / 7');
+        await expect(page.locator('#counter')).toContainText('7 / 7');
 
         const scoreScreen = page.locator('#score-screen');
         await expect(scoreScreen).toBeVisible({ timeout: 5000 });

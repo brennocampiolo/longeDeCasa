@@ -12,6 +12,7 @@ npm
 
 # Assets originais/backup
 assets/fundo1_original.jpg
+assets/fundo2_original.jpg
 
 # Debug (não vai para produção)
 debug.js
