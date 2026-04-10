@@ -39,7 +39,7 @@ const objetos = [
 ];
 
 function atualizarContador() {
-    counter.innerHTML = `${foundCount} / ${totalObjects} <span style="font-size:0.9em; opacity:0.6; margin-left:6px;">☰</span>`;
+    counter.innerHTML = `${foundCount} / ${totalObjects} <span style="font-size:1em; opacity:0.6; margin-left:6px; vertical-align:middle;">☰</span>`;
 }
 
 // ===============================
