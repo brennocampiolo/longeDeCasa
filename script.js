@@ -163,7 +163,7 @@ function mostrarBloqueio() {
     rankingSection.innerHTML = `
         <div id="ranking" style="width:100%; max-width:400px;"></div>
         <p style="font-size:11px; color:rgba(255,255,255,0.35); margin-top:30px; letter-spacing:0.5px;">
-            Disponível até 24/04 às 23h
+            Disponível até 23/04 às 23h
         </p>
     `;
     gameContainer.after(rankingSection);
