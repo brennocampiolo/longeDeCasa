@@ -41,6 +41,13 @@ async function navegarAteJogo(page) {
 test.describe('Longe de Casa - Jogo', () => {
 
     test.beforeEach(async ({ page }) => {
+        // Isola testes do Firebase de produção
+        await page.route('**/firebase-config.js', route => {
+            route.fulfill({
+                contentType: 'application/javascript',
+                body: 'const db = null; const firebaseReady = false;'
+            });
+        });
         await page.goto('/', { waitUntil: 'domcontentloaded' });
         await page.evaluate(() => localStorage.clear());
         await page.reload({ waitUntil: 'domcontentloaded' });

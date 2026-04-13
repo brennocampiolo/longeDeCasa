@@ -5,7 +5,6 @@ const startButton = document.getElementById('start-button');
 const startScreen = document.getElementById('start-screen');
 const previewScreen = document.getElementById('preview-screen');
 const advanceButton = document.getElementById('advance-button');
-const backButton = document.getElementById('back-button');
 const gameContainer = document.getElementById('game-container');
 const gameWrapper = document.getElementById('game-wrapper');
 const gameImage = document.getElementById('game-image');
@@ -106,10 +105,6 @@ previewBack.addEventListener('click', () => {
     introScreen.style.display = 'block';
 });
 
-backButton.addEventListener('click', () => {
-    location.reload();
-});
-
 // ===============================
 // TELA DE BLOQUEIO (POS-JOGO)
 // ===============================
@@ -146,7 +141,6 @@ function mostrarBloqueio() {
 
     // === Imagem interativa ===
     gameContainer.style.display = 'block';
-    document.getElementById('back-button').style.display = 'none';
     counter.style.display = 'none';
     musicToggle.style.display = 'none';
     hotspots.forEach(h => h.style.display = 'none');

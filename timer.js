@@ -69,14 +69,23 @@ function iniciarTimer() {
     timerDisplay.innerText = formatTime(getTempoTotal());
 
     interval = setInterval(() => {
-        timerDisplay.innerText = formatTime(getTempoTotal());
+        const total = getTempoTotal();
+        timerDisplay.innerText = formatTime(total);
+        // Salva a cada tick para garantir persistência no mobile
+        localStorage.setItem('longeDeCasa_tempoAcumulado', String(total));
     }, 1000);
 }
 
-window.addEventListener('beforeunload', () => {
+function salvarTempoAtual() {
     if (sessionStart) {
         localStorage.setItem('longeDeCasa_tempoAcumulado', String(getTempoTotal()));
     }
+}
+
+window.addEventListener('beforeunload', salvarTempoAtual);
+window.addEventListener('pagehide', salvarTempoAtual);
+document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'hidden') salvarTempoAtual();
 });
 
 // ===============================
