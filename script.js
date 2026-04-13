@@ -160,7 +160,12 @@ function mostrarBloqueio() {
         display:flex; flex-direction:column; align-items:center;
         padding:40px 20px; box-sizing:border-box;
     `;
-    rankingSection.innerHTML = '<div id="ranking" style="width:100%; max-width:400px;"></div>';
+    rankingSection.innerHTML = `
+        <div id="ranking" style="width:100%; max-width:400px;"></div>
+        <p style="font-size:11px; color:rgba(255,255,255,0.35); margin-top:30px; letter-spacing:0.5px;">
+            Disponível até 24/04 às 23h
+        </p>
+    `;
     gameContainer.after(rankingSection);
 
     // === Indicador "Ranking ↓" (fixed bottom-right) ===
