@@ -189,7 +189,7 @@ function mostrarScore(tempoFinal) {
             const nome = user.displayName || user.email;
             const uid = user.uid;
 
-            // Verifica se já está no ranking (proteção contra múltiplas tentativas)
+            // Verifica se já está no ranking ou foi banido
             if (typeof firebaseReady !== 'undefined' && firebaseReady && db) {
                 const existing = await db.collection('ranking').where('uid', '==', uid).get();
                 if (!existing.empty) {
@@ -197,6 +197,14 @@ function mostrarScore(tempoFinal) {
                     loginBtn.style.display = 'none';
                     skipLink.style.display = 'none';
                     loginMsg.style.display = 'block';
+
+                    if (entry.banido) {
+                        loginMsg.innerHTML = '<span style="color:#ff6b6b;">Esta conta foi desqualificada.</span>';
+                        cont.style.display = 'block';
+                        mostrarRanking('');
+                        return;
+                    }
+
                     loginMsg.innerHTML = `
                         <span style="color:#ff6b6b;">Você já está no ranking!</span><br>
                         <span style="opacity:0.6; font-size:12px;">
@@ -326,7 +334,7 @@ async function mostrarRanking(nomeJogador) {
                 .orderBy('tempo', 'asc')
                 .limit(50)
                 .get();
-            dados = snapshot.docs.map(doc => doc.data());
+            dados = snapshot.docs.map(doc => doc.data()).filter(d => !d.banido);
         } catch (err) {
             console.warn('Erro ao buscar ranking do Firebase:', err);
             dados = JSON.parse(localStorage.getItem('ranking')) || [];
